@@ -1,0 +1,90 @@
+[user]
+	name = Joy Peterson
+	email = jpeterson@insidesales.com
+[core]
+	autocrlf = false
+	safecrlf = warn
+	editor = 'sublime_text' --wait --new-window
+	# editor = 'C:/Program Files (x86)/Notepad++/notepad++.exe' -multiInst -notabbar
+
+[diff]
+	#tool=custom
+	external = ~/.git-cmd/my_diff.sh
+	
+[merge]
+    tool = kdiff3
+	
+[mergetool "p4merge"]
+    trustExitCode = true
+    keepBackup = false
+[difftool]
+    prompt = false
+[mergetool]
+    keepBackup = false
+	
+[difftool "tdiff"]
+	cmd = \""C:/Program Files/TortoiseGit/bin/TortoiseGitMerge.exe"\"  -mine:"$REMOTE" -base:"$LOCAL"
+	trustExitCode = false
+
+[mergetool "tmerge"]
+    cmd = \""c:/Program Files/TortoiseGit/bin/TortoiseGitMerge.exe"\" -base:"$BASE" -theirs:"$REMOTE" -mine:"$LOCAL" -merged:"$MERGED"
+	
+[difftool "custom"]
+	external = ~/.git-cmd/my_diff.sh
+    trustExitCode = false
+	
+[mergetool "kdiff3"]
+    trustExitCode = false
+	keepBackup = false
+	
+[color]
+	ui = true
+	
+[color "status"]
+	untracked = red normal bold
+	changed = red normal bold
+  
+[alias]
+	# See http://haacked.com/archive/2014/07/28/github-flow-aliases/
+	
+	co = checkout
+	cob = checkout -b
+	
+	# Commit all code in current branch.
+	cm = !git add -A && git commit -m 
+	
+	# Modify the previous commit.
+	amend = commit -a --amend
+	
+	# Edit global .gitconfig file.
+	ec = config --global -e
+	
+	# Update working branch from master.
+	up = !git pull --prune $@ && git submodule update --init --recursive
+	
+	# Throw away uncommitted work, but first commit in case you realize you need it later, 
+	# then reset HEAD to before the commit. This allows the discarded work to be 
+	# retrieved later if necessary.
+	wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+		
+	# Condensed status
+	st = status -s
+	
+	# follow file renames (mnemonic: 'log file' or 'log follow')
+	lf = log --decorate --follow      
+	
+	# short log form of last 10 commits, can override 10 w/ own count ('git lo -20' works)
+	lo = log -10 --decorate                --pretty=tformat:"%ar%x09%C(yellow)%h%x09%Cgreen%d%Creset%x20%s" 
+	
+	l = log -10 --decorate --no-merges    --pretty=tformat:"%ar%x09%C(yellow)%h%x09%Cgreen%d%Creset%x20%s"
+	lb = log -10 --decorate --first-parent --pretty=tformat:"%ar%x09%C(yellow)%h%x09%Cgreen%d%Creset%x20%s"
+	l1 = log --decorate -1
+
+	# diff HEAD-vs-working  (all changes since last commit, regardless of staging status)
+	dh = diff --diff-filter=CMRUX HEAD
+	dn = diff --name-status    
+
+[push]
+	default = simple
+[http]
+	sslverify = false

@@ -1,8 +1,20 @@
 [
     {
-        "link": {}
+        "link": {
+        	"~/.dotfiles": "",
+        	"~/.config" : "config",
+        	"~/bashlib" : "bashlib",
+        	"~/.bash_profile" : "bash_profile",
+        	"~/.bashrc" : "bashrc",
+        	"~/.bash_logout" : "bash_logout",
+        	"~/.gitconfig" : "gitconfig",
+        	"~/.git-cmd" : "git-cmd",
+        	"~/.vimrc" : "vimrc"
+        }
     },
     {
-        "shell": []
+        "shell": [
+        	["git submodule update --init --recursive --remote", "Installing submodules"]
+        ]
     }
 ]

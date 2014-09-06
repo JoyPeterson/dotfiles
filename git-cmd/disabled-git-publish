@@ -1,0 +1,4 @@
+#!/bin/sh
+
+target=$1
+source=$(git rev-parse --abbrev-ref HEAD) && git rebase $target && git checkout $target && git merge $source #&& git branch -d $source
