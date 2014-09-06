@@ -4,9 +4,9 @@
 #-------------------------------------------------------------------------------
 # Include files
 #-------------------------------------------------------------------------------
-source ~/bashlib/ssh.bash
-source ~/bashlib/msys2.bash
-source ~/bashlib/arc.bash
+source ~/.dotfiles/bashlib/ssh.bash
+source ~/.dotfiles/bashlib/msys2.bash
+source ~/.dotfiles/bashlib/arc.bash
 
 if [ -f ~/.dotfiles/liquidprompt/liquidprompt ]; then
 	source ~/.dotfiles/liquidprompt/liquidprompt

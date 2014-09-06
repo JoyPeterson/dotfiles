@@ -1,9 +1,11 @@
 [
     {
+        "clean": ["~"]
+    },
+    {
         "link": {
         	"~/.dotfiles": "",
         	"~/.config" : "config",
-        	"~/bashlib" : "bashlib",
         	"~/.bash_profile" : "bash_profile",
         	"~/.bashrc" : "bashrc",
         	"~/.bash_logout" : "bash_logout",
