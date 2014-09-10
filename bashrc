@@ -88,7 +88,8 @@ edit ()
 # Execute a PowerShell command
 p()
 {
-	PowerShell.exe -NoProfile -NonInteractive -NoLogo -ExecutionPolicy Unrestricted -Command "& { $@ }"
+    # Run powershell without tmp and temp set
+    env -u tmp -u temp PowerShell.exe -NoProfile -NonInteractive -NoLogo -ExecutionPolicy Unrestricted -Command "& { $@ }"
 }
 
 # Report if Git is storing a file as a binary file.

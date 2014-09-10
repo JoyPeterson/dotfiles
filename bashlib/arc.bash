@@ -1,9 +1,9 @@
-COMMON_REVIEWERS="'krichards, iellsworth'"
+COMMON_REVIEWERS="krichards, iellsworth"
 
 # Pull changes from upstream and send the current branch to arc for review
 function arcr ()
 {
-	rebase_feature_branch && arc diff $@ --reviewers $COMMON_REVIEWERS
+	rebase_feature_branch && arc diff $@ --reviewers "$COMMON_REVIEWERS"
 }
 
 
