@@ -1,3 +1,8 @@
+if [ -f /c/bin/arcanist/resources/shell/bash-completion ]; then
+	source /c/bin/arcanist/resources/shell/bash-completion
+fi
+
+
 COMMON_REVIEWERS="krichards, iellsworth"
 
 # Pull changes from upstream and send the current branch to arc for review
