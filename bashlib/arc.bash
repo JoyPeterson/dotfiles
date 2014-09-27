@@ -3,7 +3,7 @@ if [ -f /c/bin/arcanist/resources/shell/bash-completion ]; then
 fi
 
 
-COMMON_REVIEWERS="krichards, iellsworth"
+COMMON_REVIEWERS="krichards, iellsworth, ssandberg"
 
 # Pull changes from upstream and send the current branch to arc for review
 function arcr ()
