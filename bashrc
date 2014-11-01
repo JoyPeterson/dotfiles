@@ -27,6 +27,9 @@ pathadd() {
 pathadd ~/.git-cmd
 pathadd /c/bin/arcanist/bin
 
+export COMPOSER_HOME=~/.composer
+pathadd ~/.composer/vendor/bin
+
 export et=/c/Projects/EmailTracker
 export nd=/c/Projects/EmailTracker/ext/is/nexusdomain
 
@@ -123,7 +126,10 @@ function h() {
 	echo "psg [pattern]: ps aux | grep ..."
 	echo "isGitBinary [file]: Report if Git is storing a file as a binary file."
 	echo "p [command]: Execute a powershell command or script."
-	echo "arcr: send the current branch to arc for code review."
+	echo "arcr: Rebase the current branch from upstream and send the current branch to arc for review."
+    echo "arcd: Diff the current branch against its upstream branch and send the result to arc for review."
+    echo "arcl [source_branch]: Land source_branch or the current branch onto the upstream branch."
 	echo "ff [name]: Find a file with a pattern in name from the current directory."
 	echo "eh: Open hosts file in editor."
+    echo "winx: Open a Windows explorer window for the current directory."
 }

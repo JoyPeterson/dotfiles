@@ -45,7 +45,26 @@
 	changed = red normal bold
   
 [alias]
+	#list all aliases
+    la = "!git config -l | grep alias | cut -c 7-"
+
+	#assume aliases - Ignoring changes to files that are managed by git.
+    assume = update-index --assume-unchanged
+    unassume = update-index --no-assume-unchanged
+    #show assumed files
+    assumed = "!git ls-files -v | grep ^h | cut -c 3-"
+	
+	#merges
+    ours = "!f() { git co --ours $@ && git add $@; }; f"
+    theirs = "!f() { git co --theirs $@ && git add $@; }; f"
+	
+	# show all tags w/ one line of annotation
+	tags=tag -l * -n 1
+	# last 20 tags, lexicographic sort
+	ta=!git tags | tail -20
+	
 	# See http://haacked.com/archive/2014/07/28/github-flow-aliases/
+	# and https://bitbucket.org/durdn/cfg/src/master/.gitconfig?at=master
 	
 	co = checkout
 	cob = checkout -b
@@ -82,7 +101,14 @@
 
 	# diff HEAD-vs-working  (all changes since last commit, regardless of staging status)
 	dh = diff --diff-filter=CMRUX HEAD
-	dn = diff --name-status    
+	dn = diff --name-status
+	
+	# list the files that changed in a changelist
+	changed = diff-tree --no-commit-id --name-only -r
 
 [push]
 	default = simple
+	
+[rerere]
+	# remember how conflicts were resolved and automatically apply them in the futre.
+	enabled = true

@@ -5,7 +5,7 @@ fi
 
 COMMON_REVIEWERS="krichards, iellsworth, ssandberg"
 
-# Pull changes from upstream and send the current branch to arc for review
+# Rebase the current branch from upstream and send the current branch to arc for review.
 function arcr ()
 {
 	rebase_feature_branch && arcd
@@ -18,6 +18,20 @@ function arcd()
 	arc diff $(us_branch) --reviewers "$COMMON_REVIEWERS"
 }
 
+# Land a branch onto its upstream branch
+function arcl()
+{
+	if [ "$1" == "" ]; then
+		src_branch=$(git rev-parse --abbrev-ref HEAD)
+	else
+		src_branch=$1
+		git checkout $src_branch || fail "$src_branch does not exist.\n";
+	fi
+
+	trg_branch=$(us_branch)
+	printf "Landing $src_branch onto $trg_branch.\n\n"
+	arc land $src_branch --onto $trg_branch
+}
 
 # Pull latest version of upstream branch and then rebase the current branch
 # onto the upstream branch
@@ -42,10 +56,51 @@ function rebase_feature_branch()
 	git rebase $us_branch
 }
 
+# Checks if $1 is a remote branch
+function is_remote_branch()
+{
+	branch=$1
+	if [ $(git branch -r | grep $branch) == $branch ]; then
+		echo 1;
+	else
+		echo 0;
+	fi
+}
+
 # Get the name of the upstream branch
 function us_branch()
 {
-	echo $(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD))
+	if [ "" == "$1" ]; then
+		echo $(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD))
+	else
+		echo $(git rev-parse --abbrev-ref --symbolic-full-name $1@{upstream})
+	fi
+}
+
+# Find the remote branch that is an ancestor of the current branch.
+function find_us_remote_branch()
+{
+	us_branch=$(us_branch)
+	is_remote=$(is_remote_branch $us_branch) 
+	i="0"
+	while [[ $i -lt 4 && $is_remote -eq 0 ]]; do
+		us_branch=$(us_branch $us_branch)
+		is_remote=$(is_remote_branch $us_branch)
+		i=$[i+1]
+	done
+
+	if [ $is_remote ]; then
+		echo $us_branch
+	else
+		echo ""
+	fi
+}
+
+# Exit with a failure message.
+function fail()
+{
+	printf "ERROR: $1"
+	kill -INT $$
 }
 
 # Merge current branch into visionqa
@@ -98,20 +153,15 @@ function push_to_qa()
 	git checkout $c_branch
 }
 
-# 10:54:18 [jpeterson:/c/Projects/EmailTracker] feature/dreamforce ± git up
-# 10:54:57 [jpeterson:/c/Projects/EmailTracker] feature/dreamforce ± git co visionqa && git up
-# 10:59:07 [jpeterson:/c/Projects/EmailTracker] visionqa ± git co feature/dreamforce
-# 10:59:15 [jpeterson:/c/Projects/EmailTracker] feature/dreamforce ± git merge visionqa --no-commit
-# 10:59:25 [jpeterson:/c/Projects/EmailTracker] feature/dreamforce(+0/-0) ± git st
-# 10:59:28 [jpeterson:/c/Projects/EmailTracker] feature/dreamforce(+0/-0) ± git reset HEAD .arcconfig
-# 10:59:38 [jpeterson:/c/Projects/EmailTracker] feature/dreamforce(+3/-3) ± git co -- .arcconfig
-# 10:59:46 [jpeterson:/c/Projects/EmailTracker] feature/dreamforce(+0/-0) ± git commit
 
-# 10:59:50 [jpeterson:/c/Projects/EmailTracker] feature/dreamforce(1) ± git push
-# 10:59:58 [jpeterson:/c/Projects/EmailTracker] feature/dreamforce ± git co visionqa
-# 11:00:05 [jpeterson:/c/Projects/EmailTracker] visionqa ± git merge feature/dreamforce --no-commit --no-ff
-# 11:00:32 [jpeterson:/c/Projects/EmailTracker] visionqa(+0/-0) ± git st
-# Unstaged changes after reset:
-# 11:00:41 [jpeterson:/c/Projects/EmailTracker] visionqa(+3/-3) ± git co -- .arcconfig
-# 11:00:46 [jpeterson:/c/Projects/EmailTracker] visionqa(+0/-0) ± git commit
-# 11:00:54 [jpeterson:/c/Projects/EmailTracker] visionqa(2) ± git push
+# Implement tab completion for arcl
+function __arcl ()
+{
+  local cur opts
+  COMP_WORDS=( arc land "${COMP_WORDS[@]:1}")
+  COMP_CWORD=$((COMP_CWORD + 1))
+  cur="${COMP_WORDS[COMP_CWORD]}"
+  opts=$(echo | arc shell-complete --current ${COMP_CWORD} -- ${COMP_WORDS[@]})
+  COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+}
+complete -F __arcl arcl
