@@ -21,6 +21,8 @@ function arcd()
 # Land a branch onto its upstream branch
 function arcl()
 {
+	git fetch origin
+	
 	if [ "$1" == "" ]; then
 		src_branch=$(git rev-parse --abbrev-ref HEAD)
 	else
@@ -37,6 +39,7 @@ function arcl()
 # onto the upstream branch
 function rebase_feature_branch()
 {
+	git fetch origin
 	# get current branch name
 	c_branch=$(git rev-parse --abbrev-ref HEAD)
 	echo $c_branch
