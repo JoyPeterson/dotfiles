@@ -2,10 +2,17 @@
 	name = Joy Peterson
 	email = jpeterson@insidesales.com
 [core]
-	autocrlf = false
+	autocrlf = input
 	safecrlf = warn
 	# editor = 'sublime_text' --wait --new-window
 	editor = 'C:/Program Files (x86)/Notepad++/notepad++.exe' -multiInst -notabbar
+#	preloadindex = true
+#	fscache = true
+
+[gc]
+	# auto = 256
+	reflogExpire = 30 days
+	reflogexpireUnreachable = 3 days
 
 [diff]
 	#tool=custom
