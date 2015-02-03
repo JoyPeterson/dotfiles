@@ -14,7 +14,7 @@ function cp_vision() {
 
 	git st | \
 	awk -v src=$src -v target=$target \
-		'{printf "cp -v \"%s/%s\" \"%s/%s\"", src, $2, target, $2}' | sh
+		'{printf "cp -v \"%s/%s\" \"%s/%s\"\n", src, $2, target, $2}' | sh
 }
 
 # Copy ihance DLLs from the ihance VM to the local web repository
