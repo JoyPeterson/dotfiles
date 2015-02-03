@@ -66,9 +66,9 @@
     theirs = "!f() { git co --theirs $@ && git add $@; }; f"
 	
 	# show all tags w/ one line of annotation
-	tags=tag -l * -n 1
+	tags=tag -l -n1
 	# last 20 tags, lexicographic sort
-	ta=!git tags | tail -20
+	ta = "!f() { git tags $@ | tail -20; }; f"
 	
 	# See http://haacked.com/archive/2014/07/28/github-flow-aliases/
 	# and https://bitbucket.org/durdn/cfg/src/master/.gitconfig?at=master
