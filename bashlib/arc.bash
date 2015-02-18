@@ -22,9 +22,9 @@ function arcd()
 function arcl()
 {
 	git fetch origin
-	
+
 	if [ "$1" == "" ]; then
-		src_branch=$(git rev-parse --abbrev-ref HEAD)
+		src_branch=$(c_branch)
 	else
 		src_branch=$1
 		git checkout $src_branch || fail "$src_branch does not exist.\n";
@@ -41,8 +41,8 @@ function rebase_feature_branch()
 {
 	git fetch origin
 	# get current branch name
-	c_branch=$(git rev-parse --abbrev-ref HEAD)
-	echo $c_branch
+	trg_branch=$(c_branch)
+	echo $trg_branch
 
 	# get upstream branch name
 	us_branch=$(us_branch)
@@ -53,10 +53,16 @@ function rebase_feature_branch()
 	# parse output of 'git status -sb $(us_branch)'
 	git checkout $us_branch
 	git pull origin
-	git checkout $c_branch
+	git checkout $trg_branch
 	# endif
 
 	git rebase $us_branch
+}
+
+# Returns the name of the current branch
+function c_branch()
+{
+	echo $(git rev-parse --abbrev-ref HEAD)
 }
 
 # Checks if $1 is a remote branch
@@ -84,7 +90,7 @@ function us_branch()
 function find_us_remote_branch()
 {
 	us_branch=$(us_branch)
-	is_remote=$(is_remote_branch $us_branch) 
+	is_remote=$(is_remote_branch $us_branch)
 	i="0"
 	while [[ $i -lt 4 && $is_remote -eq 0 ]]; do
 		us_branch=$(us_branch $us_branch)
@@ -111,35 +117,35 @@ function push_to_qa()
 {
 	target_branch=visionqa
 	gitroot=$(git rev-parse --show-toplevel)
-	c_branch=$(git rev-parse --abbrev-ref HEAD)
+	src_branch=$(c_branch)
 
 
-	printf "Updating $c_branch...\n" && \
+	printf "Updating $src_branch...\n" && \
 	git pull origin && \
 	printf "Checking out branch: $target_branch...\n" && \
 	git checkout $target_branch && \
 	printf "Updating $target_branch...\n" && \
 	git pull origin && \
-	printf "Checking out branch: $c_branch...\n" && \
-	git checkout $c_branch && \
+	printf "Checking out branch: $src_branch...\n" && \
+	git checkout $src_branch && \
 	printf "Merging from $target_branch...\n" && \
 	git merge $target_branch --no-commit
 
 	config_path=$(git status -s | grep .arcconfig | awk '{ print $2}')
 	if [ "$config_path" != "" ]; then
 		printf "Reverting $config_path...\n" && \
-		git checkout $c_branch $config_path
+		git checkout $src_branch $config_path
 	fi
 
 	[ $? == 0 ] && \
 	printf "Finishing merge from $target_branch...\n" && \
 	git commit -F $gitroot/.git/MERGE_MSG && \
-	printf "Pushing to origin\$c_branch...\n" && \
+	printf "Pushing to origin\$src_branch...\n" && \
 	git push origin && \
 	printf "Checking out branch: $target_branch...\n" && \
 	git checkout $target_branch && \
-	printf "Merging from $c_branch...\n" && \
-	git merge $c_branch --no-commit  --no-ff && \
+	printf "Merging from $src_branch...\n" && \
+	git merge $src_branch --no-commit  --no-ff && \
 
 	config_path=$(git status -s | grep .arcconfig | awk '{ print $2}')
 	if [ "$config_path" != "" ]; then
@@ -148,12 +154,12 @@ function push_to_qa()
 	fi
 
 	[ $? == 0 ] && \
-	printf "Finishing merge from $c_branch...\n" && \
+	printf "Finishing merge from $src_branch...\n" && \
 	git commit -F $gitroot/.git/MERGE_MSG && \
 	printf "Pushing to origin/$target_branch...\n" && \
 	git push origin && \
-	printf "Switching back to $c_branch...\n"
-	git checkout $c_branch
+	printf "Switching back to $src_branch...\n"
+	git checkout $src_branch
 }
 
 
