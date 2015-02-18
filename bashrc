@@ -11,6 +11,7 @@ bind '"\e[B": history-search-forward'
 source ~/.dotfiles/bashlib/ssh.bash
 source ~/.dotfiles/bashlib/msys2.bash
 source ~/.dotfiles/bashlib/arc.bash
+source ~/.dotfiles/bashlib/util.bash
 source ~/.dotfiles/bashlib/vision.bash
 
 if [ -f ~/.dotfiles/liquidprompt/liquidprompt ]; then
