@@ -17,9 +17,14 @@ function cp_vision() {
 		'{printf "cp -v \"%s/%s\" \"%s/%s\"\n", src, $2, target, $2}' | sh
 }
 
+# Compile the vision binaries on the VM
+function compile_vision() {
+	ssh Administrator@jpeterson-ihanc "cd /c/src/source_home/web && src/compile.bash src"
+}
+
 # Copy ihance DLLs from the ihance VM to the local web repository
 function cp_web_bin() {
-	pushd /c/Projects/ihance/web > /dev/null
+	pushd /c/Projects/ihance/IHWeb > /dev/null
 	cp -v /s/web/appserver/site/bin/Ihance.dll appserver/site/bin/
 	cp -v /s/web/appserver/site/bin/Ihance.pdb appserver/site/bin/
 	cp -v /s/web/logger/site/bin/Ihance.dll logger/site/bin/
