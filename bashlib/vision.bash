@@ -35,3 +35,17 @@ function cp_web_bin() {
 	cp -v /s/web/website/site/bin/Ihance.pdb website/site/bin/
 	popd > /dev/nu
 }
+
+# Copy modified files from $src/web on the ihance vm to the local repository folder
+function cp_web() {
+	ssh Administrator@jpeterson-ihanc "cd /c/src/source_home/web && git st" \
+	| awk '{printf "scp Administrator@jpeterson-ihanc:/c/src/source_home/web/%s /c/Projects/ihance/IHWeb/%s\n", $2, $2}' \
+	| sh
+}
+
+# Copy modified files from $sit on the ihance vm to the local repository folder
+function cp_sit() {
+	ssh Administrator@jpeterson-ihanc "cd /c/src/source_home/sit && git st" \
+	| awk '{printf "scp Administrator@jpeterson-ihanc:/c/src/source_home/sit/%s /c/Projects/ihance/IHSit/%s\n", $2, $2}' \
+	| sh
+}
