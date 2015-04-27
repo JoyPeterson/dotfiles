@@ -35,3 +35,12 @@ function cp_web_bin() {
 	cp -v /s/web/website/site/bin/Ihance.pdb website/site/bin/
 	popd > /dev/nu
 }
+
+
+# Run code coverage analysis for Outlook Plugin.
+function coverage() {
+	pushd $et/plugins/outlook-vision/build
+	p ./BuildIt.ps1 -target 'Coverage'
+	start $et/plugins/outlook-vision/build/Reports/CodeCoverage/index.htm
+	popd
+}
