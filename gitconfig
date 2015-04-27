@@ -3,7 +3,8 @@
 	email = jpeterson@insidesales.com
 [core]
 	autocrlf = input
-	safecrlf = warn
+	#safecrlf = warn
+	safecrlf = false
 	# editor = 'sublime_text' --wait --new-window
 	editor = 'C:/Program Files (x86)/Notepad++/notepad++.exe' -multiInst -notabbar
 #	preloadindex = true
