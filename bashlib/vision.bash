@@ -39,3 +39,21 @@ function coverage() {
 	start $et/plugins/outlook-vision/build/Reports/CodeCoverage/index.htm
 	popd
 }
+
+
+function cp_vision_config() {
+	env=$1
+	cp $et/plugins/outlook-vision/build/service.config_$env $APPDATA/Vision/service.config
+}
+
+function alpha() {
+	cp_vision_config "alpha"
+}
+
+function beta() {
+	cp_vision_config "beta"
+}
+
+function prod() {
+	cp_vision_config "production"
+}
