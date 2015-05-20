@@ -15,7 +15,7 @@
     ~/.zpreztorc: zprezto/runcoms/zpreztorc
     ~/.zprofile: zprezto/runcoms/zprofile
     ~/.zshenv: zprezto/runcoms/zshenv
-    ~/.zshrc: zprezto/runcoms/zshrc
+    ~/.zshrc: zshrc
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
