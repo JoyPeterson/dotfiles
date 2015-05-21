@@ -1,4 +1,4 @@
-if [ -f /c/bin/arcanist/resources/shell/bash-completion ]; then
+if [[ -f /c/bin/arcanist/resources/shell/bash-completion ]]; then
 	source /c/bin/arcanist/resources/shell/bash-completion
 fi
 
@@ -23,7 +23,7 @@ function arcl()
 {
 	git fetch origin
 
-	if [ "$1" == "" ]; then
+	if [[ "$1" == "" ]]; then
 		src_branch=$(c_branch)
 	else
 		src_branch=$1
@@ -69,7 +69,7 @@ function c_branch()
 function is_remote_branch()
 {
 	branch=$1
-	if [ $(git branch -r | grep $branch) == $branch ]; then
+	if [ $(git branch -r | grep $branch) "==" $branch ]; then
 		echo 1;
 	else
 		echo 0;
@@ -79,10 +79,10 @@ function is_remote_branch()
 # Get the name of the upstream branch
 function us_branch()
 {
-	if [ "" == "$1" ]; then
+	if [[ "" == "$1" ]]; then
 		echo $(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD))
 	else
-		echo $(git rev-parse --abbrev-ref --symbolic-full-name $1@{upstream})
+		echo $(git rev-parse --abbrev-ref --symbolic-full-name $1@\{upstream\})
 	fi
 }
 
@@ -132,12 +132,12 @@ function push_to_qa()
 	git merge $target_branch --no-commit
 
 	config_path=$(git status -s | grep .arcconfig | awk '{ print $2}')
-	if [ "$config_path" != "" ]; then
+	if [[ "$config_path" != "" ]]; then
 		printf "Reverting $config_path...\n" && \
 		git checkout $src_branch $config_path
 	fi
 
-	[ $? == 0 ] && \
+	[[ $? == 0 ]] && \
 	printf "Finishing merge from $target_branch...\n" && \
 	git commit -F $gitroot/.git/MERGE_MSG && \
 	printf "Pushing to origin\$src_branch...\n" && \
@@ -148,12 +148,12 @@ function push_to_qa()
 	git merge $src_branch --no-commit  --no-ff && \
 
 	config_path=$(git status -s | grep .arcconfig | awk '{ print $2}')
-	if [ "$config_path" != "" ]; then
+	if [[ "$config_path" != "" ]]; then
 		printf "Reverting $config_path...\n" && \
 		git checkout $target_branch $config_path
 	fi
 
-	[ $? == 0 ] && \
+	[[ $? == 0 ]] && \
 	printf "Finishing merge from $src_branch...\n" && \
 	git commit -F $gitroot/.git/MERGE_MSG && \
 	printf "Pushing to origin/$target_branch...\n" && \
