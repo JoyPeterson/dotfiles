@@ -2,6 +2,8 @@
 # Git Utility functions
 #------------------------------------------------------------------------------
 
+pathadd ~/.git-cmd
+
 # display useful aliases and functions
 function git_h()
 {

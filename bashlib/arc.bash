@@ -1,3 +1,8 @@
+pathadd /c/bin/arcanist/bin
+
+export COMPOSER_HOME=~/.composer
+pathadd ~/.composer/vendor/bin
+
 if [[ -f /c/bin/arcanist/resources/shell/bash-completion ]]; then
 	source /c/bin/arcanist/resources/shell/bash-completion
 fi

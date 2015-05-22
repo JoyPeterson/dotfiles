@@ -25,6 +25,13 @@ alias grep='grep --color=auto'
 #--------------------------------------------------------------------------------
 # Functions
 #--------------------------------------------------------------------------------
+# Add a directory to the path if it is not already part of the path.
+# From http://superuser.com/a/39995
+pathadd() {
+    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+        PATH="${PATH:+"$PATH:"}$1"
+    fi
+}
 
 # Reload settings from ~/.zshrc
 src() {
@@ -34,9 +41,12 @@ src() {
 #-------------------------------------------------------------------------------
 # Include files
 #-------------------------------------------------------------------------------
+source ~/.dotfiles/bashlib/util.bash
+source ~/.dotfiles/bashlib/ssh.bash
 source ~/.dotfiles/bashlib/msys2.bash
 source ~/.dotfiles/bashlib/arc.bash
 source ~/.dotfiles/bashlib/git.bash
+source ~/.dotfiles/bashlib/vision.bash
 
 # Customize to your needs...
 
@@ -51,11 +61,10 @@ setopt NUMERIC_GLOB_SORT
 # 10 second wait if you do something that will delete everything.
 setopt RM_STAR_WAIT
 
-export EDITOR="subl -n -w"
-
 # display useful aliases and functions
 function h() {
+    util_h
     git_h
     arc_h
-    msys2_h
+    msy2_h
 }
