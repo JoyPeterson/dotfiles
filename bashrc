@@ -11,7 +11,7 @@ bind '"\e[B": history-search-forward'
 source ~/.dotfiles/bashlib/ssh.bash
 source ~/.dotfiles/bashlib/msys2.bash
 source ~/.dotfiles/bashlib/arc.bash
-source ~/.dotfiles/bashlib/util.bash
+source ~/.dotfiles/bashlib/git.bash
 source ~/.dotfiles/bashlib/vision.bash
 
 if [ -f ~/.dotfiles/liquidprompt/liquidprompt ]; then
@@ -57,56 +57,6 @@ src() {
 	source ~/.bashrc
 }
 
-# Open a file an an editor
-edit ()
-{
-    for f in "$@";
-    do
-        if [ -d "$f" ]; then
-            explorer.exe "$f";
-        else
-			ext="${f##*.}"
-            case $ext in
-                'doc')
-                    /c/Program\ Files/Microsoft\ Office\ 15/root/office15/WINWORD.exe "$f"
-                ;;
-                'xls')
-                    c/Program\ Files/Microsoft\ Office\ 15/root/office15/EXCEL.exe "$f"
-                ;;
-                'ppt')
-                    c/Program\ Files/Microsoft\ Office\ 15/root/office15/POWERPNT.exe "$f"
-                ;;
-                'odt')
-                    /c/Program\ Files/Microsoft\ Office\ 15/root/office15/WINWORD.exe "$f"
-                ;;
-                'png' | 'gif' | 'jpg')
-                    /c/Program\ Files/TechSmith/SnagIt\ 9/SnagitEditor.exe "$f"
-                ;;
-                *)
-                    # notepad++ "$f"
-                    sublime_text "$f"
-                ;;
-            esac;
-        fi;
-    done
-}
-
-# Execute a PowerShell command
-p()
-{
-    # Run powershell without tmp and temp set
-    env -u tmp -u temp PowerShell.exe -NoProfile -NonInteractive -NoLogo -ExecutionPolicy Unrestricted -Command "& { $@ }"
-}
-
-# Report if Git is storing a file as a binary file.
-isGitBinary() {
-    p=$(printf '%s\t-\t' -)
-	# 4b825dc642... is a magic SHA which represents the empty tree
-    t=$(git diff --numstat 4b825dc642cb6eb9a060e54bf8d69288fbee4904 HEAD -- "$1")
-    case "$t" in "$p"*) echo "$1" is binary; return ;; esac
-    echo "$1" is not binary
-}
-
 function psg() {
     #        do not show grep itself           color matching string              color the PID
     # ps aux | grep -v grep | grep --ignore-case --color=always $1 | colout '^\S+\s+([0-9]+).*$' blue
@@ -119,20 +69,12 @@ function ff() {
 	find . -type f -iname '*'$*'*' -ls ;
 }
 
-# edit hosts file
-function eh() {
-	edit /c/windows/system32/drivers/etc/hosts
-}
 
 # display useful aliases and functions
 function h() {
-	echo "psg [pattern]: ps aux | grep ..."
-	echo "isGitBinary [file]: Report if Git is storing a file as a binary file."
-	echo "p [command]: Execute a powershell command or script."
-	echo "arcr: Rebase the current branch from upstream and send the current branch to arc for review."
-    echo "arcd: Diff the current branch against its upstream branch and send the result to arc for review."
-    echo "arcl [source_branch]: Land source_branch or the current branch onto the upstream branch."
+    git_h
+    arc_h
+    msy2_h
+    echo "psg [pattern]: ps aux | grep ..."
 	echo "ff [name]: Find a file with a pattern in name from the current directory."
-	echo "eh: Open hosts file in editor."
-    echo "winx: Open a Windows explorer window for the current directory."
 }

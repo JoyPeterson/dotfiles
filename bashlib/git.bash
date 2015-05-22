@@ -1,6 +1,22 @@
 #------------------------------------------------------------------------------
-# Utility functions
+# Git Utility functions
 #------------------------------------------------------------------------------
+
+# display useful aliases and functions
+function git_h()
+{
+    echo "isGitBinary [file]: Report if Git is storing a file as a binary file."
+}
+
+# Report if Git is storing a file as a binary file.
+isGitBinary() {
+    p=$(printf '%s\t-\t' -)
+    # 4b825dc642... is a magic SHA which represents the empty tree
+    t=$(git diff --numstat 4b825dc642cb6eb9a060e54bf8d69288fbee4904 HEAD -- "$1")
+    case "$t" in "$p"*) echo "$1" is binary; return ;; esac
+    echo "$1" is not binary
+}
+
 gitmap() {
 	dir="$1"; shift;
 	[ ! -d "$dir" ] && echo 'Usage: gitmap <dir> <cmd>' && echo '   eg: gitmap $src git st' && return 1

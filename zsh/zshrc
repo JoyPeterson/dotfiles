@@ -34,7 +34,9 @@ src() {
 #-------------------------------------------------------------------------------
 # Include files
 #-------------------------------------------------------------------------------
+source ~/.dotfiles/bashlib/msys2.bash
 source ~/.dotfiles/bashlib/arc.bash
+source ~/.dotfiles/bashlib/git.bash
 
 # Customize to your needs...
 
@@ -50,3 +52,10 @@ setopt NUMERIC_GLOB_SORT
 setopt RM_STAR_WAIT
 
 export EDITOR="subl -n -w"
+
+# display useful aliases and functions
+function h() {
+    git_h
+    arc_h
+    msys2_h
+}

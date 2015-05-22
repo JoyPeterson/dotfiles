@@ -5,6 +5,13 @@ fi
 
 COMMON_REVIEWERS="krichards, iellsworth"
 
+# display useful aliases and functions
+function arc_h() {
+	echo "arcr: Rebase the current branch from upstream and send the current branch to arc for review."
+    echo "arcd: Diff the current branch against its upstream branch and send the result to arc for review."
+    echo "arcl [source_branch]: Land source_branch or the current branch onto the upstream branch."
+}
+
 # Rebase the current branch from upstream and send the current branch to arc for review.
 function arcr ()
 {
