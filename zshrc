@@ -38,6 +38,9 @@ source ~/.dotfiles/bashlib/arc.bash
 
 # Customize to your needs...
 
+# Allow tab completions to work under /c/... on Cygwin or msys2.
+zstyle ':completion:*' fake-files   '/:c'
+
 # If we have a glob this will expand it
 setopt GLOB_COMPLETE
 # Be Reasonable!
