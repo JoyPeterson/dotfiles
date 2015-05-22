@@ -10,12 +10,12 @@
     ~/.git-cmd: git-cmd
     ~/.vimrc: vimrc
     ~/.zprezto: zprezto
-    ~/.zlogin: zprezto/runcoms/zlogin
-    ~/.zlogout: zprezto/runcoms/zlogout
-    ~/.zpreztorc: zprezto/runcoms/zpreztorc
-    ~/.zprofile: zprezto/runcoms/zprofile
-    ~/.zshenv: zprezto/runcoms/zshenv
-    ~/.zshrc: zshrc
+    ~/.zlogin: zsh/zlogin
+    ~/.zlogout: zsh/zlogout
+    ~/.zpreztorc: zsh/zpreztorc
+    ~/.zprofile: zsh/zprofile
+    ~/.zshenv: zsh/zshenv
+    ~/.zshrc: zsh/zshrc
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
