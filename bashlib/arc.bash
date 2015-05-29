@@ -141,37 +141,63 @@ function push_to_qa()
 	printf "Checking out branch: $src_branch...\n" && \
 	git checkout $src_branch && \
 	printf "Merging from $target_branch...\n" && \
-	git merge $target_branch --no-commit
+	git merge $target_branch --no-commit && \
+	commit_merge $target_branch
 
-	config_path=$(git status -s | grep .arcconfig | awk '{ print $2}')
-	if [[ "$config_path" != "" ]]; then
-		printf "Reverting $config_path...\n" && \
-		git checkout $src_branch $config_path
-	fi
+	# config_path=$(git status -s | grep .arcconfig | awk '{ print $2}')
+	# if [[ "$config_path" != "" ]]; then
+	# 	printf "Reverting $config_path...\n" && \
+	# 	git checkout $src_branch $config_path
+	# fi
 
-	[[ $? == 0 ]] && \
-	printf "Finishing merge from $target_branch...\n" && \
-	git commit -F $gitroot/.git/MERGE_MSG && \
-	printf "Pushing to origin\$src_branch...\n" && \
+	# [[ $? == 0 ]] && \
+	# printf "Finishing merge from $target_branch...\n" && \
+	# git commit -F $gitroot/.git/MERGE_MSG && \
+
+	[[ $? == 0 ]] &&
+	printf "Pushing to origin/$src_branch...\n" && \
 	git push origin && \
 	printf "Checking out branch: $target_branch...\n" && \
 	git checkout $target_branch && \
 	printf "Merging from $src_branch...\n" && \
 	git merge $src_branch --no-commit  --no-ff && \
+	commit_merge $src_branch
 
-	config_path=$(git status -s | grep .arcconfig | awk '{ print $2}')
-	if [[ "$config_path" != "" ]]; then
-		printf "Reverting $config_path...\n" && \
-		git checkout $target_branch $config_path
-	fi
+	# config_path=$(git status -s | grep .arcconfig | awk '{ print $2}')
+	# if [[ "$config_path" != "" ]]; then
+	# 	printf "Reverting $config_path...\n" && \
+	# 	git checkout $target_branch $config_path
+	# fi
 
+	# [[ $? == 0 ]] && \
+	# printf "Finishing merge from $src_branch...\n" && \
+	# git commit -F $gitroot/.git/MERGE_MSG && \
 	[[ $? == 0 ]] && \
-	printf "Finishing merge from $src_branch...\n" && \
-	git commit -F $gitroot/.git/MERGE_MSG && \
 	printf "Pushing to origin/$target_branch...\n" && \
 	git push origin && \
 	printf "Switching back to $src_branch...\n"
 	git checkout $src_branch
+}
+
+# Commit changes from a merge if any files have been modified. Do not commit changes to .arcconfig
+# $1 = The name of the branch that was merged from
+function commit_merge()
+{
+	local src_branch=$1
+
+	config_path=$(git status -s | grep .arcconfig | awk '{ print $2}')
+	if [[ "$config_path" != "" ]]; then
+		printf "Reverting $config_path...\n" && \
+		git reset -q HEAD $config_path
+		git checkout -- $config_path
+	fi
+
+	change_count=$(git status -s | wc -l)
+	if [ $change_count -gt 0 ]
+	then
+		printf "Finishing merge from $src_branch...\n"
+		git commit -F $gitroot/.git/MERGE_MSG
+	fi
 }
 
 
