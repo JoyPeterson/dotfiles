@@ -4,11 +4,16 @@
 # Authors:
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
+# If not running interactively, don't do anything
+[[ "$-" != *i* ]] && return
 
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
+
+bindkey -M emacs '\e[A' history-substring-search-up
+bindkey -M emacs '\e[B' history-substring-search-down
 
 #--------------------------------------------------------------------------------
 # ALIASES
@@ -21,6 +26,9 @@ alias f='fgrep'
 alias fgrep='fgrep --color=auto'
 alias fv='fgrep -v'
 alias grep='grep --color=auto'
+
+# Re-enable file globbing for scp
+# unalias scp
 
 #--------------------------------------------------------------------------------
 # Functions
@@ -67,4 +75,22 @@ function h() {
     git_h
     arc_h
     msy2_h
+}
+
+
+# Add an extra space at the end of the right prompt to account for the scrollbar in ConEmu
+function prompt_sorin_git_info {
+  # Append Git status.
+  if [[ -s "$_prompt_sorin_precmd_async_data" ]]; then
+    alias typeset='typeset -g'
+    source "$_prompt_sorin_precmd_async_data"
+    RPROMPT+='${git_info:+${(e)git_info[status]}} '
+    unalias typeset
+  fi
+
+  # Reset PID.
+  _prompt_sorin_precmd_async_pid=0
+
+  # Redisplay prompt.
+  zle && zle reset-prompt
 }
