@@ -57,3 +57,19 @@ function beta() {
 function prod() {
 	cp_vision_config "production"
 }
+
+function cp_MacTools() {
+	pushd $et/tools/MacServerTools/MacTools/bin
+	MACTOOLS_FILE=MacTools.tar.gz
+	rm -rf $MACTOOLS_FILE
+	rm -rf MacTools
+	mkdir MacTools
+	cp -r Release/* MacTools/
+	cp ../deploy/* MacTools/
+	rm -f MacTools/*.xml MacTools/*.pdb
+	tar -czf $MACTOOLS_FILE MacTools
+	rm -rf MacTools
+	# Use unaliased version of cp so that we can overwrite the file silently
+	\cp -fv $MACTOOLS_FILE \\\\hal\\IS.Share\\Employees\\jpeterson\\
+	popd
+}
