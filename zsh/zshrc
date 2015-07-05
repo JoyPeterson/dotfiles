@@ -12,9 +12,14 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-bindkey -M emacs '\e[A' history-substring-search-up
-bindkey -M emacs '\e[B' history-substring-search-down
+bindkey -M emacs '\e[A' history-substring-search-up         # [Up]
+bindkey -M emacs '\e[B' history-substring-search-down       # [Down]
 
+
+bindkey -M emacs '\e[1~' beginning-of-line                  # [Home]
+bindkey -M emacs '\e[4~' end-of-line                        # [End]
+
+bindkey -M emacs '^[[3;5~' kill-word                        # [Ctrl-Del]
 #--------------------------------------------------------------------------------
 # ALIASES
 #--------------------------------------------------------------------------------
@@ -68,6 +73,9 @@ setopt NUMERIC_GLOB_SORT
 
 # 10 second wait if you do something that will delete everything.
 setopt RM_STAR_WAIT
+
+# Allow files to be overwritten when using redirection
+unsetopt noclobber
 
 # display useful aliases and functions
 function h() {
