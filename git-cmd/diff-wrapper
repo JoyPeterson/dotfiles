@@ -1,0 +1,56 @@
+#!/bin/bash
+
+# Wrapper script for git difftool
+# This requires the .gitconfig file to have:
+#  - difftool entry for "codecompare";
+#  - difftool entry for "default";
+# These diff tool entries must both specify the cmd field.
+# The command to call this script:
+# [difftool "diff_wrapper"]
+#   cmd = ~/.git-cmd/diff-wrapper \"$BASE\" \"$LOCAL\"
+# Save this script in ~/.git-cmd/
+
+# $LOCAL is set to the name of the temporary file containing the contents of the diff pre-image and
+# $REMOTE is set to the name of the temporary file containing the contents of the diff post-image.
+# $MERGED is the name of the file which is being compared.
+# $BASE is provided for compatibility with custom merge tool commands and has the same value as $MERGED.
+
+LOCAL=$2
+REMOTE=$5
+MERGED=$1
+BASE=$1
+
+# echo "1=$1"
+# echo "2=$2"
+# echo "3=$3"
+# echo "4=$4"
+# echo "5=$5"
+# echo "6=$6"
+# echo "7=$7"
+
+# echo "#=$@"
+
+CSDIFF="\.cs"
+
+if echo "$LOCAL" | grep -q "$CSDIFF"; then
+    echo "Using diff tool for C# file";
+    CMD=$(git config difftool.codecompare.cmd)
+    eval $CMD
+else
+
+#checking for additional special diff tool cases
+
+
+#Finally, the default case:
+    echo "Using default diff tool";
+    #CMD=$(git config difftool.default.cmd)
+    CMD=$(git config difftool.codecompare.cmd)
+    # echo "CMD=$CMD"
+    eval "$CMD"
+fi
+
+
+# using kdiff3 as the side-by-side diff:
+#kdiff3 "$2" "$5"
+
+exit 0
