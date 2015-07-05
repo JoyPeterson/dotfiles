@@ -34,10 +34,6 @@
 	cmd = \""C:/Program Files/TortoiseGit/bin/TortoiseGitMerge.exe"\"  -mine:"$REMOTE" -base:"$LOCAL"
 	trustExitCode = false
 	
-[difftool "custom"]
-	external = ~/.git-cmd/my_diff.sh
-    trustExitCode = false
-	
 [merge]
     tool = kdiff3
 	
