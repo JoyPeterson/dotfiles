@@ -8,7 +8,7 @@ if [[ -f /c/bin/arcanist/resources/shell/bash-completion ]]; then
 fi
 
 
-COMMON_REVIEWERS="krichards, iellsworth"
+COMMON_REVIEWERS="iellsworth"
 
 # display useful aliases and functions
 function arc_h() {
