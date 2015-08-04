@@ -7,6 +7,10 @@ function vsto_upd() {
     cp /c/Projects/Outlook/VSTOContrib/src/VSTOContrib.Outlook/bin/Debug/VSTOContrib.*.* $et/plugins/outlook-vision/packages/VSTOContrib.Outlook.0.15.0.122/lib/net40/
 }
 
+function gelf_upd() {
+    cp /c/Projects/github/NLog.GelfLayout/src/NLog.Layouts.GelfLayout/bin/Release/NLog.Layouts.GelfLayout.dll $et/plugins/outlook-vision/packages/NLog.GelfLayout.0.2.5492.28842/lib/net45
+}
+
 # Compile the vision binaries on the VM
 function compile_vision() {
 	ssh Administrator@jpeterson-ihanc "cd /c/src/source_home/web && src/compile.bash src"
@@ -33,9 +37,11 @@ function cp_vision() {
 
 
 # Run code coverage analysis for Outlook Plugin.
+# $1 (optional) - Limits which tests are executed to a given Namespace or Class.
 function coverage() {
+	fixture=$1
 	pushd $et/plugins/outlook-vision/build
-	p ./BuildIt.ps1 -target 'Coverage'
+	p ./BuildIt.ps1 -target 'Coverage' -test_fixture $fixture
 	start $et/plugins/outlook-vision/build/Reports/CodeCoverage/index.htm
 	popd
 }
