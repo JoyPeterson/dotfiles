@@ -47,6 +47,7 @@ edit ()
     done
 }
 
+unalias p > /dev/null
 # Execute a PowerShell command
 p()
 {
