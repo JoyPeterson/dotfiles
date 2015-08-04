@@ -40,10 +40,16 @@ function cp_vision() {
 # $1 (optional) - Limits which tests are executed to a given Namespace or Class.
 function coverage() {
 	fixture=$1
-	pushd $et/plugins/outlook-vision/build
-	p ./BuildIt.ps1 -target 'Coverage' -test_fixture $fixture
+	start_dir=$(pwd)
+	cd $et/plugins/outlook-vision/build
+	if [ -n "$fixture" ]; then
+		p ./BuildIt.ps1 -target 'Coverage' -test_fixture $fixture
+	else
+		p ./BuildIt.ps1 -target 'Coverage'
+	fi
+
 	start $et/plugins/outlook-vision/build/Reports/CodeCoverage/index.htm
-	popd
+	cd $start_dir
 }
 
 
