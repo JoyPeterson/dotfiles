@@ -1,14 +1,13 @@
-export et=/c/Projects/EmailTracker
-export nd=/c/Projects/EmailTracker/ext/is/nexusdomain
+export projects=/c/Projects
 
 function vsto_upd() {
-    cp /c/Projects/Outlook/VSTOContrib/src/VSTOContrib.Autofac/bin/Debug/VSTOContrib.Autofac.dll $et/plugins/outlook-vision/packages/VSTOContrib.Autofac.0.15.0.122/lib/net40
-    cp /c/Projects/Outlook/VSTOContrib/src/VSTOContrib.Autofac/bin/Debug/VSTOContrib.Autofac.pdb $et/plugins/outlook-vision/packages/VSTOContrib.Autofac.0.15.0.122/lib/net40
-    cp /c/Projects/Outlook/VSTOContrib/src/VSTOContrib.Outlook/bin/Debug/VSTOContrib.*.* $et/plugins/outlook-vision/packages/VSTOContrib.Outlook.0.15.0.122/lib/net40/
+    cp $projects/github/VSTOContrib/src/VSTOContrib.Autofac/bin/Release/VSTOContrib.Autofac.dll $projects/outlook-plugin/packages/VSTOContrib.Autofac.0.15.0.122/lib/net40
+    cp $projects/github/VSTOContrib/src/VSTOContrib.Autofac/bin/Release/VSTOContrib.Autofac.pdb $projects/outlook-plugin/packages/VSTOContrib.Autofac.0.15.0.122/lib/net40
+    cp $projects/github/VSTOContrib/src/VSTOContrib.Outlook/bin/Release/VSTOContrib.*.* $projects/outlook-plugin/packages/VSTOContrib.Outlook.0.15.0.122/lib/net40/
 }
 
 function gelf_upd() {
-    cp /c/Projects/github/NLog.GelfLayout/src/NLog.Layouts.GelfLayout/bin/Release/NLog.Layouts.GelfLayout.dll $et/plugins/outlook-vision/packages/NLog.GelfLayout.0.2.5492.28842/lib/net45
+    cp $projects/github/NLog.GelfLayout/src/NLog.Layouts.GelfLayout/bin/Release/NLog.Layouts.GelfLayout.dll $projects/outlook-plugin/packages/NLog.GelfLayout.0.2.5492.28842/lib/net45
 }
 
 # Compile the vision binaries on the VM
@@ -41,21 +40,21 @@ function cp_vision() {
 function coverage() {
 	fixture=$1
 	start_dir=$(pwd)
-	cd $et/plugins/outlook-vision/build
+	cd $projects/outlook-plugin/build
 	if [ -n "$fixture" ]; then
 		p ./BuildIt.ps1 -target 'Coverage' -test_fixture $fixture
 	else
 		p ./BuildIt.ps1 -target 'Coverage'
 	fi
 
-	start $et/plugins/outlook-vision/build/Reports/CodeCoverage/index.htm
+	start $projects/outlook-plugin/build/Reports/CodeCoverage/index.htm
 	cd $start_dir
 }
 
 
 function cp_vision_config() {
 	env=$1
-	cp $et/plugins/outlook-vision/build/service.config_$env $APPDATA/Vision/service.config
+	cp $projects/outlook-plugin/build/service.config_$env $APPDATA/Vision/service.config
 }
 
 function alpha() {
@@ -71,7 +70,7 @@ function prod() {
 }
 
 function cp_MacTools() {
-	pushd $et/tools/MacServerTools/MacTools/bin
+	pushd $projects/mac-tools/MacTools/bin
 	MACTOOLS_FILE=MacTools.tar.gz
 	rm -rf $MACTOOLS_FILE
 	rm -rf MacTools
