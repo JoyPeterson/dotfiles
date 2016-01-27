@@ -60,6 +60,7 @@ source ~/.dotfiles/bashlib/msys2.bash
 source ~/.dotfiles/bashlib/arc.bash
 source ~/.dotfiles/bashlib/git.bash
 source ~/.dotfiles/bashlib/vision.bash
+source ~/.dotfiles/bashlib/private.bash
 
 # Customize to your needs...
 
