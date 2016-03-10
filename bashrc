@@ -20,6 +20,10 @@ if [ -f ~/.dotfiles/liquidprompt/liquidprompt ]; then
 	source ~/.dotfiles/liquidprompt/liquidprompt
 fi
 
+if [ -f /c/Projects/ihance/IHDevBashLib/bashlib/docker.bash ]; then
+    source /c/Projects/ihance/IHDevBashLib/bashlib/docker.bash
+fi
+
 #--------------------------------------------------------------------------------
 # Enviromnet variables
 #--------------------------------------------------------------------------------

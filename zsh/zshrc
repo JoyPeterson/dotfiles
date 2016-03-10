@@ -62,6 +62,10 @@ source ~/.dotfiles/bashlib/git.bash
 source ~/.dotfiles/bashlib/vision.bash
 source ~/.dotfiles/bashlib/private.bash
 
+if [ -f /c/Projects/ihance/IHDevBashLib/bashlib/docker.bash ]; then
+    source /c/Projects/ihance/IHDevBashLib/bashlib/docker.bash
+fi
+
 # Customize to your needs...
 
 # Allow tab completions to work under /c/... on Cygwin or msys2.
