@@ -17,6 +17,7 @@
     ~/.zshenv: zsh/zshenv
     ~/.zshrc: zsh/zshrc
     ~/.minttyrc: minttyrc
+    ~/.tmux.conf: tmux.conf
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
