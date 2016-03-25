@@ -16,6 +16,7 @@
     ~/.zprofile: zsh/zprofile
     ~/.zshenv: zsh/zshenv
     ~/.zshrc: zsh/zshrc
+    ~/.minttyrc: minttyrc
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
