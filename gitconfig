@@ -2,7 +2,8 @@
 	name = Joy Peterson
 	email = jpeterson@insidesales.com
 [core]
-	autocrlf = input
+	#autocrlf = true
+	autocrlf = false
 	#safecrlf = warn
 	safecrlf = false
 	# editor = 'sublime_text' --wait --new-window
