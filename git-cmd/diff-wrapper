@@ -43,8 +43,8 @@ else
 
 #Finally, the default case:
     echo "Using default diff tool";
-    #CMD=$(git config difftool.default.cmd)
-    CMD=$(git config difftool.codecompare.cmd)
+    CMD=$(git config difftool.default.cmd)
+    #CMD=$(git config difftool.codecompare.cmd)
     # echo "CMD=$CMD"
     eval "$CMD"
 fi
