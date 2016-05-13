@@ -62,8 +62,8 @@ source ~/.dotfiles/bashlib/git.bash
 source ~/.dotfiles/bashlib/vision.bash
 source ~/.dotfiles/bashlib/private.bash
 
-if [ -f /c/Projects/ihance/IHDevBashLib/bashlib/docker.bash ]; then
-    source /c/Projects/ihance/IHDevBashLib/bashlib/docker.bash
+if [ -f /c/Projects/microservices/deploy-manager/deploy-manager/config/user_config/docker.sh ]; then
+    source /c/Projects/microservices/deploy-manager/deploy-manager/config/user_config/docker.sh
 fi
 
 # Customize to your needs...
