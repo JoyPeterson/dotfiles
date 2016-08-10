@@ -34,7 +34,8 @@ CSDIFF="\.cs"
 
 if echo "$LOCAL" | grep -q "$CSDIFF"; then
     echo "Using diff tool for C# file";
-    CMD=$(git config difftool.codecompare.cmd)
+    # CMD=$(git config difftool.codecompare.cmd)
+    CMD=$(git config difftool.default.cmd)
     eval $CMD
 else
 
