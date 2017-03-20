@@ -11,6 +11,8 @@
 #	preloadindex = true
 #	fscache = true
 
+	# fileMode = false # ignore execute bit from the filesystem because it is always set for files created from Windows apps.
+
 [gc]
 	# auto = 256
 	reflogExpire = 30 days
@@ -18,14 +20,15 @@
 
 [diff]
 	external = diff-wrapper
-	tool = codecompare
-	guitool = codecompare
-
+	tool = default
+	guitool = default
+	
 [difftool]
     prompt = false
 	
 [difftool "default"]
-	cmd = 'kdiff3' "$LOCAL" "$REMOTE"
+	# cmd = 'kdiff3' "$LOCAL" "$REMOTE"
+	cmd = 'kdiff3' "`cygpath -wa $LOCAL`" "`cygpath -wa $REMOTE`"
 	
 [difftool "codecompare"]
 	cmd = codecompare -W -SC git "$LOCAL" "$REMOTE"
