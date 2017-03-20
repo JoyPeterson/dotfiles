@@ -55,6 +55,7 @@ src() {
 # Include files
 #-------------------------------------------------------------------------------
 source ~/.dotfiles/bashlib/util.bash
+source ~/.dotfiles/bashlib/et.bash
 source ~/.dotfiles/bashlib/ssh.bash
 source ~/.dotfiles/bashlib/msys2.bash
 source ~/.dotfiles/bashlib/arc.bash
@@ -107,3 +108,8 @@ function prompt_sorin_git_info {
   # Redisplay prompt.
   zle && zle reset-prompt
 }
+PATH="/home/jpeterson/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/jpeterson/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/jpeterson/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/jpeterson/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/jpeterson/perl5"; export PERL_MM_OPT;
