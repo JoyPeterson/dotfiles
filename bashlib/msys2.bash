@@ -3,7 +3,7 @@ export TERM=cygwin
 export EDITOR="subl -n -w"
 
 # Open a Windows explorer window for the current directory
-alias winx='/c/Windows/explorer.exe /e, $(cygpath -w $PWD)'
+alias winx='/c/Windows/explorer.exe /e, $(cygpath -wa $PWD)'
 
 # display useful aliases and functions
 function msys2_h()
