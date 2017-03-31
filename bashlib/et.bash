@@ -9,5 +9,5 @@ pathadd() {
     fi
 }
 
-export GOPATH="C:/Users/$USER/src/gocode"
-pathadd /c/users/$USER/src/gocode/bin
+export GOPATH="C:/Users/$USER/go"
+pathadd /c/users/$USER/go/bin
