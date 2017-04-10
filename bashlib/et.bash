@@ -9,5 +9,7 @@ pathadd() {
     fi
 }
 
-export GOPATH="C:/Users/$USER/go"
-pathadd /c/users/$USER/go/bin
+export GOPATH="C:/Users/$USER/src/go"
+pathadd /c/users/$USER/src/go/bin
+
+source /c/users/$USER/src/go/src/github.com/go-swagger/go-swagger/cmd/swagger/completion/swagger.zsh-completion
