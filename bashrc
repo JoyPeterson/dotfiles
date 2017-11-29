@@ -28,7 +28,8 @@ fi
 # Enviromnet variables
 #--------------------------------------------------------------------------------
 
-
+# Don't add commands that start with a space to the history
+export HISTCONTROL=ignorespace
 
 
 #--------------------------------------------------------------------------------
