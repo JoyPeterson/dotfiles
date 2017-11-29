@@ -3,7 +3,7 @@
 # Wrapper script for git difftool
 # This requires the .gitconfig file to have:
 #  - difftool entry for "codecompare";
-#  - difftool entry for "default";
+#  - difftool entry for "vscode";
 # These diff tool entries must both specify the cmd field.
 # The command to call this script:
 # [difftool "diff_wrapper"]
@@ -30,28 +30,28 @@ BASE=$1
 
 # echo "#=$@"
 
-CSDIFF="\.cs"
+# CSDIFF="\.cs"
 
-if echo "$LOCAL" | grep -q "$CSDIFF"; then
-    echo "Using diff tool for C# file";
-    # CMD=$(git config difftool.codecompare.cmd)
-    CMD=$(git config difftool.default.cmd)
-    eval $CMD
-else
+# if echo "$LOCAL" | grep -q "$CSDIFF"; then
+#     echo "Using diff tool for C# file";
+#     CMD=$(git config difftool.codecompare.cmd)
+#     eval $CMD
+# else
 
-#checking for additional special diff tool cases
-
-
-#Finally, the default case:
-    echo "Using default diff tool";
-    CMD=$(git config difftool.default.cmd)
-    #CMD=$(git config difftool.codecompare.cmd)
-    # echo "CMD=$CMD"
-    eval "$CMD"
-fi
+# #checking for additional special diff tool cases
 
 
-# using kdiff3 as the side-by-side diff:
-#kdiff3 "$2" "$5"
+# #Finally, the default case:
+#     echo "Using default diff tool";
+#     CMD=$(git config difftool.default.cmd)
+#     # echo "CMD=$CMD"
+#     eval "$CMD"
+# fi
+
+
+# using vscode as the side-by-side diff:
+CMD=$(git config difftool.vscode.cmd)
+# echo "CMD=$CMD"
+eval "$CMD"
 
 exit 0

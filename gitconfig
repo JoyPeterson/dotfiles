@@ -6,8 +6,7 @@
 	autocrlf = false
 	#safecrlf = warn
 	safecrlf = false
-	# editor = 'sublime_text' --wait --new-window
-	editor = 'C:/Program Files (x86)/Notepad++/notepad++.exe' -multiInst -notabbar
+	editor = code --new-window --wait
 #	preloadindex = true
 #	fscache = true
 
@@ -20,13 +19,16 @@
 
 [diff]
 	external = diff-wrapper
-	tool = default
-	guitool = default
+	tool = vscode
+	guitool = vscode
 	
 [difftool]
     prompt = false
+
+[difftool "vscode"]
+	cmd = 'code' --new-window --diff --wait "`cygpath -wa $LOCAL`" "`cygpath -wa $REMOTE`"
 	
-[difftool "default"]
+[difftool "kdiff3"]
 	# cmd = 'kdiff3' "$LOCAL" "$REMOTE"
 	cmd = 'kdiff3' "`cygpath -wa $LOCAL`" "`cygpath -wa $REMOTE`"
 	
@@ -39,7 +41,11 @@
 	trustExitCode = false
 	
 [merge]
-    tool = kdiff3
+    tool = vscode
+
+[mergetool "vscode"]
+	cmd = 'code' --new-window --wait "`cygpath -wa $MERGED`"
+	# cmd = 'code' --diff --wait "`cygpath -wa $LOCAL`" "`cygpath -wa $REMOTE`"
 	
 [mergetool "p4merge"]
     trustExitCode = true
