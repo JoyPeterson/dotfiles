@@ -39,8 +39,7 @@ edit ()
                     /c/Program\ Files/TechSmith/SnagIt\ 9/SnagitEditor.exe "$f"
                 ;;
                 *)
-                    # notepad++ "$f"
-                    sublime_text "$f"
+                    code -n "$f"
                 ;;
             esac;
         fi;
